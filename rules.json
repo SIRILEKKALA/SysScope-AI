@@ -1,0 +1,62 @@
+{
+  "thresholds": {
+    "cpu_usage": 80,
+    "memory_usage": 85,
+    "db_latency_ms": 200,
+    "error_rate": 0.05,
+    "request_rate_spike": 1.5
+  },
+  "root_causes": {
+    "HIGH_CPU": {
+      "cause": "Unoptimized background jobs or high request volume",
+      "confidence": 0.85,
+      "evidence": "CPU usage exceeded 80% threshold"
+    },
+    "HIGH_MEMORY": {
+      "cause": "Potential memory leak in application process",
+      "confidence": 0.75,
+      "evidence": "Memory usage exceeded 85% threshold"
+    },
+    "DB_LATENCY": {
+      "cause": "Unindexed queries or connection pool exhaustion",
+      "confidence": 0.9,
+      "evidence": "Database response time > 200ms"
+    },
+    "HIGH_ERROR_RATE": {
+      "cause": "Upstream service failure or code regression",
+      "confidence": 0.8,
+      "evidence": "Error rate exceeded 5% threshold"
+    }
+  },
+  "decisions": {
+    "HIGH_CPU": {
+      "best_action": "Scale horizontally and throttle background workers",
+      "reasoning": "Horizontal scaling will distribute the load, while throttling non-critical jobs preserves resources for user requests.",
+      "alternatives": [
+        {
+          "action": "Vertical scaling",
+          "pros": "Simple to implement",
+          "cons": "Expensive and has physical limits"
+        },
+        {
+          "action": "Request rate limiting",
+          "pros": "Immediate relief",
+          "cons": "Impacts user experience"
+        }
+      ],
+      "confidence": 0.92
+    },
+    "DB_LATENCY": {
+      "best_action": "Enable query caching and check connection pool",
+      "reasoning": "Caching reduces direct DB hits, while pool checks ensure no starvation.",
+      "alternatives": [
+        {
+          "action": "Read replicas",
+          "pros": "Scales read heavy loads",
+          "cons": "Adds architectural complexity"
+        }
+      ],
+      "confidence": 0.88
+    }
+  }
+}

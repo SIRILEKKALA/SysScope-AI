@@ -1,0 +1,5 @@
+{
+  "name": "SysScope AI",
+  "description": "Failure Prevention & Decision Intelligence Engine. A deterministic system for detecting issues, identifying root causes, and recommending actionable engineering decisions.",
+  "requestFramePermissions": []
+}
